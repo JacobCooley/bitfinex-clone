@@ -1,0 +1,12 @@
+@import "~styles/constants";
+
+ul{
+  margin: $med-margin;
+  grid-column: span 1;
+  margin-bottom: $med-margin !important;
+}
+
+.tickers-list{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}

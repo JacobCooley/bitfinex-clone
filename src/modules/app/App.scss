@@ -1,0 +1,54 @@
+@import "~styles/colors";
+@import "~styles/constants";
+@import '~font-awesome/css/font-awesome.css';
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:100,300,400");
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body, div, span, ul, li {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+button:hover, a:hover {
+  cursor: pointer;
+}
+
+button:focus, input:focus {
+  outline: 0;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  transition: .3s;
+}
+
+a:hover {
+  color: $light-blue;
+}
+
+
+
+body {
+  min-height: 100%;
+  background: $med-blue;
+  color: white;
+}
+
+main {
+  padding: $large-padding;
+  grid-column: span 12;
+}
+
+.container {
+  display: grid;
+  grid-template: 50px 1fr / repeat(12, 1fr);
+}

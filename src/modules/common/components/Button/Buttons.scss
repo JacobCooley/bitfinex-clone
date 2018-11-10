@@ -1,0 +1,25 @@
+@import "~styles/colors";
+@import "~styles/constants";
+
+button {
+  background: $light-blue;
+  border: 0;
+  border-radius: $border-radius;
+  min-width: 120px;
+  min-height: 40px;
+  color: white;
+  margin-top: $small-margin;
+  margin-bottom: $small-margin;
+  transition: .3s
+}
+
+button + button {
+}
+
+button:hover, a:hover {
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3f5a79;
+}

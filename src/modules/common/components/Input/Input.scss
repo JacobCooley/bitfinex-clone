@@ -1,0 +1,13 @@
+@import "~styles/constants";
+
+label {
+  margin-right: $med-margin;
+  margin-top: $med-margin;
+  input {
+    margin-left: $med-margin;
+    padding-left: $med-padding;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: $border-radius;
+  }
+}

@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TickersComponent /> TEST +++ capturing Snapshot of <TickersComponent /> 1`] = `
+Array [
+  <p>
+    Enter Tickers you want to see. Separate with commas and prepend 't' or 'f'
+  </p>,
+  <label>
+    Tickers:
+    <input
+      name="tickers"
+      onChange={[Function]}
+      type="text"
+    />
+  </label>,
+  <button
+    onClick={[Function]}
+  >
+    Show Bitfinex tickers
+  </button>,
+  <div
+    className="tickers-list"
+  >
+    <ul>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+    </ul>
+  </div>,
+]
+`;
+
+exports[`<TickersComponent /> TEST +++ capturing Snapshot of <TickersComponent /> with loading 1`] = `
+Array [
+  <p>
+    Enter Tickers you want to see. Separate with commas and prepend 't' or 'f'
+  </p>,
+  <label>
+    Tickers:
+    <input
+      name="tickers"
+      onChange={[Function]}
+      type="text"
+    />
+  </label>,
+  <button
+    onClick={[Function]}
+  >
+    Show Bitfinex tickers
+  </button>,
+  <div
+    className="tickers-list"
+  >
+    <ul>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+      <li>
+        : 
+        NaN
+      </li>
+    </ul>
+  </div>,
+]
+`;
