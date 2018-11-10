@@ -1,5 +1,5 @@
-##Project for Bitfinex##
+Project for Bitfinex
 
 Steps to run
-`yarn`
-`yarn start`
+```yarn```
+```yarn start```
