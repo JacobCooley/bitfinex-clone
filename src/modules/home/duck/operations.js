@@ -1,95 +1,69 @@
-import fetch from 'cross-fetch'
 import { Creators } from './actions'
-import { baseApiUrl } from 'utils/constants'
-import { fundingTickerStructure, tradingTickerStructure } from 'structures/tickers'
-
+import { fundingTickerStructure, tradingTickerStructure, orderBookStructure, tradeStructure } from 'utils/data-structures'
 const requestTickerJsonAction = Creators.requestTickerJson
+const changeTickerJsonAction = Creators.changeTickerString
 const receiveTickerJsonAction = Creators.receiveTickerJson
+const receiveOrderBookJsonAction = Creators.receiveOrderBookJson
+const receiveTradeJsonAction = Creators.receiveTradeJson
 
-const fetchTickerData = (ticker) => {
+const changeTicker = (ticker) => {
+	return dispatch => dispatch(changeTickerJsonAction(ticker))
+}
+
+const fetchTickerData = (data) => {
 	return async dispatch => {
-		dispatch(requestTickerJsonAction(ticker))
-		let data
-		try {
-			const response = await fetch(`${baseApiUrl}/ticker/${ticker}`, {
-				method: "GET",
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-			const responseData = await response.json()
-			console.log('respdata', responseData)
-			data = responseData.map((value, i) => {
-				const structure = ticker.substr(0, 1) === ('t') ? tradingTickerStructure : fundingTickerStructure
+		const tickerData = JSON.parse(data)
+		if (tickerData[1] && tickerData[1].length > 7) {
+			const structure = tickerData[1].length <= 10 ? tradingTickerStructure : fundingTickerStructure
+			const tickerStructure = tickerData[1].map((value, i) => {
 				const newValueObject = {}
 				newValueObject[structure[i]] = value
 				return newValueObject
 			})
-		} catch (e) {
-			console.error('ERROR', e)
+			dispatch(receiveTickerJsonAction(tickerStructure))
 		}
-		dispatch(receiveTickerJsonAction(data))
 	}
 }
 
-const fetchOrderBookData = (tickers) => {
+const fetchOrderBookData = (data) => {
 	return async dispatch => {
-		dispatch(requestTickersJsonAction(tickers))
-		let data
-		console.log('tickers', tickers)
-		try {
-			const response = await fetch(`${baseApiUrl}/tickers?symbols=${tickers.join()}`, {
-				method: "GET",
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-			const responseData = await response.json()
-			data = responseData.map((array) => {
-				const structure = array[0].substr(0, 1) === ('t') ? tradingTickerStructure : fundingTickerStructure
-				return array.map((value, i) => {
-					const newValueObject = {}
-					newValueObject[structure[i]] = value
-					return newValueObject
+		const bookData = JSON.parse(data)
+		if (bookData[1] && bookData[1].length > 20) {
+			const structure = orderBookStructure
+			const bookStructure = bookData[1].map((bookArray, i) => {
+				let newValueObject = {}
+				bookArray.forEach((bookValue, i) => {
+					const newValue = structure[i]
+					newValueObject[newValue] = bookValue
 				})
+				return newValueObject
 			})
-		} catch (e) {
-			console.error('ERROR', e)
+			dispatch(receiveOrderBookJsonAction(bookStructure))
 		}
-		dispatch(receiveTickersJsonAction(data))
 	}
 }
 
-const fetchTradeData = (tickers) => {
+const fetchTradeData = (data) => {
 	return async dispatch => {
-		dispatch(requestTickersJsonAction(tickers))
-		let data
-		console.log('tickers', tickers)
-		try {
-			const response = await fetch(`${baseApiUrl}/tickers?symbols=${tickers.join()}`, {
-				method: "GET",
-				headers: {
-					'X-Requested-With': 'XMLHttpRequest'
-				}
-			})
-			const responseData = await response.json()
-			data = responseData.map((array) => {
-				const structure = array[0].substr(0, 1) === ('t') ? tradingTickerStructure : fundingTickerStructure
-				return array.map((value, i) => {
-					const newValueObject = {}
-					newValueObject[structure[i]] = value
-					return newValueObject
+		const tradeData = JSON.parse(data)
+		if (tradeData[1] && tradeData[1].length > 2) {
+			const structure = tradeStructure
+			const tradedStructure = tradeData[1].map((tradeArray, index) => {
+				let newValueObject = {}
+				tradeArray.forEach((tradeValue, i) => {
+					const newValue = structure[i]
+					newValueObject[newValue] = tradeValue
 				})
+				return newValueObject
 			})
-		} catch (e) {
-			console.error('ERROR', e)
+			dispatch(receiveTradeJsonAction(tradedStructure))
 		}
-		dispatch(receiveTickersJsonAction(data))
 	}
 }
 
 export default {
 	fetchTickerData,
 	fetchOrderBookData,
-	fetchTradeData
+	fetchTradeData,
+	changeTicker
 }

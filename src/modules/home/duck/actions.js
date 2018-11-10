@@ -2,8 +2,9 @@ import { createActions } from 'reduxsauce';
 
 const { Creators, Types } = createActions({
     requestTickerJson: ['ticker'],
+    changeTickerString: ['ticker'],
     receiveTickerJson: ['tickerData'],
-    receiveOrderBookJson: ['orderBookData'],
+    receiveOrderBookJson: ['bookData'],
     receiveTradeJson: ['tradeData'],
 });
 

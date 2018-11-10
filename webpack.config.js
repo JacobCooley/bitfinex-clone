@@ -64,7 +64,6 @@ module.exports = {
 			common: path.resolve(__dirname, 'src/modules/common/'),
 			functions: path.resolve(__dirname, 'src/utils/functions/'),
 			home: path.resolve(__dirname, 'src/modules/home/'),
-			structures: path.resolve(__dirname, 'src/utils/structures'),
 			styles: path.resolve(__dirname, 'src/modules/common/styles'),
 			utils: path.resolve(__dirname, 'src/utils')
 		}

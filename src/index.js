@@ -11,13 +11,12 @@ import {
 import App from 'app/App'
 import rootReducer from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension'
-
 const middleware = composeWithDevTools(applyMiddleware(thunk, logger))
 const store = createStore(rootReducer, middleware)
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App/>
+			<App/>
 	</Provider>,
 	document.getElementById('app')
 )

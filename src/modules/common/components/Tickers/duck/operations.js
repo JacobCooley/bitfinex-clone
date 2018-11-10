@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch'
 import { Creators } from './actions'
 import { baseApiUrl } from 'utils/constants'
-import { fundingTickerStructure, tradingTickerStructure } from 'structures/tickers'
+import { fundingTickerStructure, tradingTickerStructure } from 'utils/data-structures'
 const requestTickersJsonAction = Creators.requestTickersJson
 const receiveTickersJsonAction = Creators.receiveTickersJson
 

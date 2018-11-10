@@ -26,3 +26,17 @@ export const tradingTickerStructure = [
 	'HIGH',
 	'LOW'
 ]
+
+export const orderBookStructure = [
+	'PRICE',
+	'COUNT',
+	'AMOUNT'
+]
+
+export const tradeStructure = [
+	'MTS',
+	'TIME',
+	'AMOUNT',
+	'PRICE',
+	'PERIOD'
+]

@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom'
 import { projectTitle } from 'utils/constants'
 import './Header.scss'
 
-const HeaderComponent = () => (
-	<header>
-		<div>{projectTitle}</div>
-		<nav>
-			<div>WebSocket Controls:</div>
-			<div><a>Connect</a></div>
-			<div><a>Disconnect</a></div>
-		</nav>
-	</header>
-)
 
-export default HeaderComponent;
+
+class HeaderComponent extends React.Component {
+	
+	componentDidMount(){
+	}
+	render() {
+		return (
+			<header>
+				<div>{projectTitle}</div>
+			</header>
+		)
+	}
+}
+
+export default HeaderComponent

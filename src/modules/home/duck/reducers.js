@@ -5,18 +5,27 @@ export const INITIAL_STATE = {
     ticker: '',
     showSpinner: false,
     tickerData: [],
-    orderBookData: [],
+    bookData: [],
     tradeData: []
 }
 
+export const change_ticker = (state = INITIAL_STATE, action) => {
+	const { ticker } = action;
+	return {
+		...state,
+		ticker,
+		tickerData: [],
+		bookData: [],
+		tradeData: [],
+		showSpinner: false
+	}
+}
 
 export const request_ticker_json = (state = INITIAL_STATE, action) => {
-    const { tickers } = action;
     return {
         ...state,
-		tickers,
 		tickerData: [],
-		orderBookData: [],
+		bookData: [],
         tradeData: [],
         showSpinner: true
     }
@@ -32,10 +41,10 @@ export const receive_ticker_json = (state = INITIAL_STATE, action) => {
 }
 
 export const receive_order_book_json = (state = INITIAL_STATE, action) => {
-	const { orderBookData } = action;
+	const { bookData } = action;
 	return {
 		...state,
-		orderBookData,
+		bookData,
 		showSpinner: false
 	}
 }
@@ -54,6 +63,7 @@ export const HANDLERS = {
     [Types.RECEIVE_TICKER_JSON]: receive_ticker_json,
     [Types.RECEIVE_ORDER_BOOK_JSON]: receive_order_book_json,
     [Types.RECEIVE_TRADE_JSON]: receive_trade_json,
+    [Types.CHANGE_TICKER_STRING]: change_ticker
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)
