@@ -4,20 +4,26 @@ import "./Book.scss"
 import shortid from 'shortid'
 
 const BooksComponent = ({ bookData, ticker }) => {
+	let bidTotal = 0
 	const bidBooks = bookData.map(book => {
 		if(parseFloat(book['AMOUNT']) > 0){
 			const amount = formatNumber(book['AMOUNT'], 2)
 			const price = book['PRICE']
 			const count = book['COUNT']
-			return (<tr><td>{price}</td><td>{amount}</td><td>{count}</td></tr>)
+			bidTotal += parseFloat(amount)
+			const row = (<tr><td>{price}</td><td>{amount}</td><td>{bidTotal.toFixed(2)}</td><td>{count}</td></tr>)
+			return row
 		}
 	})
+	let askTotal = 0
 	const askBooks = bookData.map(book => {
 		if(parseFloat(book['AMOUNT']) < 0){
-			const amount = book['AMOUNT']
+			const amount = formatNumber(Math.abs(book['AMOUNT']), 2)
 			const price = book['PRICE']
 			const count = book['COUNT']
-			return (<tr><td>{price}</td><td>{amount}</td><td>{count}</td></tr>)
+			askTotal += parseFloat(amount)
+			const row = (<tr><td>{price}</td><td>{amount}</td><td>{askTotal.toFixed(2)}</td><td>{count}</td></tr>)
+			return row
 		}
 	})
 	return (
@@ -29,6 +35,7 @@ const BooksComponent = ({ bookData, ticker }) => {
 						<tr>
 							<th>Price</th>
 							<th>Amount</th>
+							<th>Total</th>
 							<th>Count</th>
 						</tr>
 						<tbody>{bidBooks}</tbody>
@@ -37,6 +44,7 @@ const BooksComponent = ({ bookData, ticker }) => {
 						<tr>
 							<th>Price</th>
 							<th>Amount</th>
+							<th>Total</th>
 							<th>Count</th>
 						</tr>
 						<tbody>{askBooks}</tbody>

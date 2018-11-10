@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
 	const fetchTickerData = (ticker, tickerSocket, bookSocket, tradeSocket) => {
 		if (tickerSocket.readyState !== tickerSocket.CLOSED && bookSocket.readyState !== bookSocket.CLOSED && tradeSocket.readyState !== tradeSocket.CLOSED) {
 			tickerSocket.send(JSON.stringify({
@@ -25,7 +25,6 @@ const mapDispatchToProps = (dispatch) => {
 				symbol: ticker
 			}))
 			tickerSocket.addEventListener('message', function (event) {
-				console.log('event', event)
 				dispatch(tickerOperations.fetchTickerData(event.data))
 			})
 			
@@ -35,7 +34,6 @@ const mapDispatchToProps = (dispatch) => {
 				symbol: ticker
 			}))
 			bookSocket.addEventListener('message', function (event) {
-				console.log('ordermes', event.data)
 				dispatch(tickerOperations.fetchOrderBookData(event.data))
 			})
 			tradeSocket.send(JSON.stringify({
@@ -44,7 +42,6 @@ const mapDispatchToProps = (dispatch) => {
 				symbol: ticker
 			}))
 			tradeSocket.addEventListener('message', function (event) {
-				console.log('trademes', event.data)
 				dispatch(tickerOperations.fetchTradeData(event.data))
 			})
 		} else {
@@ -56,6 +53,18 @@ const mapDispatchToProps = (dispatch) => {
 	}
 	return { fetchTickerData, changeTicker }
 }
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+	const newprops = {
+		...dispatchProps,
+		...stateProps,
+		bookData: stateProps.bookData,
+		...ownProps
+	}
+	console.log('new', newprops)
+	return newprops
+}
+
 
 const HomeContainer = connect(
 	mapStateToProps,
