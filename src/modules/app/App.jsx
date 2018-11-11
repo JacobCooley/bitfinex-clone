@@ -9,9 +9,9 @@ import { baseSocketUrl } from 'utils/constants'
 import SocketTickerContext from 'utils/sockets/socket-ticker-context'
 import SocketBookContext from 'utils/sockets/socket-book-context'
 import SocketTradeContext from 'utils/sockets/socket-trade-context'
-let tickerSocket = new WebSocket(baseSocketUrl)
-let tradeSocket = new WebSocket(baseSocketUrl)
-let bookSocket = new WebSocket(baseSocketUrl)
+let tickerSocket
+let tradeSocket
+let bookSocket
 import './App.scss'
 import { tickerOperations } from '../home/duck'
 
@@ -22,33 +22,47 @@ class App extends Component {
 	}
 	
 	connect = () => {
-		tickerSocket = new WebSocket(baseSocketUrl)
-		bookSocket = new WebSocket(baseSocketUrl)
-		tradeSocket = new WebSocket(baseSocketUrl)
-		bookSocket.addEventListener('open', function (event) {
-			console.log('booksocket opened')
+		console.log('connect')
+		const tickerPromise = new Promise((resolve, reject) => {
+			tickerSocket = new WebSocket(baseSocketUrl)
+			tickerSocket.addEventListener('open', function (event) {
+				console.log('tickerSocket opened')
+				resolve('opened')
+			})
+			tickerSocket.addEventListener('close', function (event) {
+				console.log('tickerSocket closed')
+			})
 		})
-		tradeSocket.addEventListener('open', function (event) {
-			console.log('tradeSocket opened')
+		const bookPromise = new Promise((resolve, reject) => {
+			bookSocket = new WebSocket(baseSocketUrl)
+			bookSocket.addEventListener('open', function (event) {
+				console.log('tickerSocket opened')
+				resolve('opened')
+			})
+			bookSocket.addEventListener('close', function (event) {
+				console.log('tickerSocket closed')
+			})
 		})
-		tickerSocket.addEventListener('open', function (event) {
-			console.log('tickerSocket opened')
+		const tradePromise = new Promise((resolve, reject) => {
+			tradeSocket = new WebSocket(baseSocketUrl)
+			tradeSocket.addEventListener('open', function (event) {
+				console.log('tickerSocket opened')
+				resolve('opened')
+			})
+			tradeSocket.addEventListener('close', function (event) {
+				console.log('tickerSocket closed')
+			})
 		})
-		bookSocket.addEventListener('close', function (event) {
-			console.log('booksocket closed')
+		
+		return Promise.all([tickerPromise,bookPromise,tradePromise]).then(()=>{
+			this.setState({
+				tickerSocket: tickerSocket,
+				bookSocket: bookSocket,
+				tradeSocket: tradeSocket
+			},() => {
+				return 'resolved'
+			})
 		})
-		tradeSocket.addEventListener('close', function (event) {
-			console.log('tradeSocket closed')
-		})
-		tickerSocket.addEventListener('close', function (event) {
-			console.log('tickerSocket closed')
-		})
-	}
-	
-	disconnect = () => {
-		tickerSocket.close()
-		bookSocket.close()
-		tradeSocket.close()
 	}
 	
 	render() {
@@ -60,7 +74,7 @@ class App extends Component {
 							<div className='container'>
 								<Header/>
 								<main>
-									<Home connect={this.connect} disconnect={this.disconnect}/>
+									<Home connect={this.connect} />
 								</main>
 							</div>
 						</Router>

@@ -11,7 +11,7 @@ import {
 import App from 'app/App'
 import rootReducer from './reducers'
 import { composeWithDevTools } from 'redux-devtools-extension'
-const middleware = composeWithDevTools(applyMiddleware(thunk, logger))
+const middleware = composeWithDevTools(applyMiddleware(thunk))
 const store = createStore(rootReducer, middleware)
 
 ReactDOM.render(

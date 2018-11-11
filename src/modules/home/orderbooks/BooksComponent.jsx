@@ -6,23 +6,33 @@ import shortid from 'shortid'
 const BooksComponent = ({ bookData, ticker }) => {
 	let bidTotal = 0
 	const bidBooks = bookData.map(book => {
-		if(parseFloat(book['AMOUNT']) > 0){
+		if (parseFloat(book['AMOUNT']) > 0) {
 			const amount = formatNumber(book['AMOUNT'], 2)
 			const price = book['PRICE']
 			const count = book['COUNT']
 			bidTotal += parseFloat(amount)
-			const row = (<tr><td>{price}</td><td>{amount}</td><td>{bidTotal.toFixed(2)}</td><td>{count}</td></tr>)
+			const row = (<tr key={shortid.generate()}>
+				<td>{price}</td>
+				<td>{amount}</td>
+				<td>{bidTotal.toFixed(2)}</td>
+				<td>{count}</td>
+			</tr>)
 			return row
 		}
 	})
 	let askTotal = 0
 	const askBooks = bookData.map(book => {
-		if(parseFloat(book['AMOUNT']) < 0){
+		if (parseFloat(book['AMOUNT']) < 0) {
 			const amount = formatNumber(Math.abs(book['AMOUNT']), 2)
 			const price = book['PRICE']
 			const count = book['COUNT']
 			askTotal += parseFloat(amount)
-			const row = (<tr><td>{price}</td><td>{amount}</td><td>{askTotal.toFixed(2)}</td><td>{count}</td></tr>)
+			const row = (<tr key={shortid.generate()}>
+				<td>{price}</td>
+				<td>{amount}</td>
+				<td>{askTotal.toFixed(2)}</td>
+				<td>{count}</td>
+			</tr>)
 			return row
 		}
 	})
@@ -32,21 +42,25 @@ const BooksComponent = ({ bookData, ticker }) => {
 			{bookData.length > 0 ? (
 				<>
 					<table>
-						<tr>
+						<thead>
+						<tr style={{ color: 'green' }}>
 							<th>Price</th>
 							<th>Amount</th>
 							<th>Total</th>
 							<th>Count</th>
 						</tr>
+						</thead>
 						<tbody>{bidBooks}</tbody>
 					</table>
 					<table>
-						<tr>
+						<thead>
+						<tr style={{ color: '#984B43' }}>
 							<th>Price</th>
 							<th>Amount</th>
 							<th>Total</th>
 							<th>Count</th>
 						</tr>
+						</thead>
 						<tbody>{askBooks}</tbody>
 					</table>
 				</>

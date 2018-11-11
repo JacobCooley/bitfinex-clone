@@ -17,54 +17,12 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-	const fetchTickerData = (ticker, tickerSocket, bookSocket, tradeSocket) => {
-		if (tickerSocket.readyState !== tickerSocket.CLOSED && bookSocket.readyState !== bookSocket.CLOSED && tradeSocket.readyState !== tradeSocket.CLOSED) {
-			tickerSocket.send(JSON.stringify({
-				event: 'subscribe',
-				channel: 'ticker',
-				symbol: ticker
-			}))
-			tickerSocket.addEventListener('message', function (event) {
-				dispatch(tickerOperations.fetchTickerData(event.data))
-			})
-			
-			bookSocket.send(JSON.stringify({
-				event: 'subscribe',
-				channel: 'book',
-				symbol: ticker
-			}))
-			bookSocket.addEventListener('message', function (event) {
-				dispatch(tickerOperations.fetchOrderBookData(event.data))
-			})
-			tradeSocket.send(JSON.stringify({
-				event: 'subscribe',
-				channel: 'trades',
-				symbol: ticker
-			}))
-			tradeSocket.addEventListener('message', function (event) {
-				dispatch(tickerOperations.fetchTradeData(event.data))
-			})
-		} else {
-			console.error("Websocket Closed!")
-		}
-	}
+	
 	const changeTicker = (ticker) => {
 		dispatch(tickerOperations.changeTicker(ticker))
 	}
-	return { fetchTickerData, changeTicker }
+	return { changeTicker, dispatch }
 }
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-	const newprops = {
-		...dispatchProps,
-		...stateProps,
-		bookData: stateProps.bookData,
-		...ownProps
-	}
-	console.log('new', newprops)
-	return newprops
-}
-
 
 const HomeContainer = connect(
 	mapStateToProps,

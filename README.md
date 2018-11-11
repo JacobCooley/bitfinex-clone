@@ -1,5 +1,5 @@
 Project for Bitfinex
 
 Steps to run
-```yarn```
+```yarn``` then
 ```yarn start```

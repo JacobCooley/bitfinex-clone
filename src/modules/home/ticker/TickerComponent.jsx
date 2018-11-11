@@ -22,7 +22,7 @@ const TickerComponent = ({ tickerData, ticker }) => {
 	return (
 		<div className='ticker'>
 			<div>Ticker: {ticker ? ticker : 'None'}</div>
-			<div>24hr Vol: {volume}%</div>
+			<div>24hr Vol: {volume}</div>
 			<div>24hr Price Change: {priceChange}%</div>
 			<div>Last Price: {lastPrice}</div>
 		</div>
